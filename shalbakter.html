@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Informatika - Interaktivni Cheatsheet</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --surface: #1e293b;
+      --surface-border: #334155;
+      --text: #f8fafc;
+      --text-sub: #94a3b8;
+      --accent: #3b82f6;
+      --accent-hover: #2563eb;
+      --correct: #10b981;
+      --correct-bg: rgba(16, 185, 129, 0.15);
+      --incorrect: #ef4444;
+      --incorrect-bg: rgba(239, 68, 68, 0.15);
+    }
+
+    [data-theme="light"] {
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --surface-border: #e2e8f0;
+      --text: #0f172a;
+      --text-sub: #64748b;
+      --accent: #2563eb;
+      --accent-hover: #1d4ed8;
+      --correct: #059669;
+      --correct-bg: #d1fae5;
+      --incorrect: #dc2626;
+      --incorrect-bg: #fee2e2;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding: 20px;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    .container { max-width: 900px; margin: 0 auto; }
+    
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    h1 { font-size: 1.8rem; font-weight: 700; }
+    h2 { font-size: 1.3rem; margin-bottom: 12px; color: var(--accent); }
+
+    .controls {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+
+    input[type="text"] {
+      flex: 1;
+      min-width: 200px;
+      padding: 10px 16px;
+      border-radius: 8px;
+      border: 1px solid var(--surface-border);
+      background: var(--surface);
+      color: var(--text);
+      font-size: 1rem;
+    }
+
+    button {
+      padding: 10px 16px;
+      border-radius: 8px;
+      border: none;
+      background: var(--accent);
+      color: #fff;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    button:hover { background: var(--accent-hover); }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      border-radius: 12px;
+      margin-bottom: 12px;
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+
+    .card-header {
+      padding: 16px 20px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 600;
+      user-select: none;
+    }
+
+    .card-body {
+      padding: 0 20px 16px 20px;
+      display: none;
+      border-top: 1px solid var(--surface-border);
+      padding-top: 16px;
+    }
+
+    .card.open .card-body { display: block; }
+
+    .answer-box {
+      background: var(--correct-bg);
+      color: var(--correct);
+      padding: 12px 16px;
+      border-radius: 8px;
+      margin-top: 10px;
+      font-weight: 600;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+    }
+    th, td {
+      border: 1px solid var(--surface-border);
+      padding: 8px 12px;
+      text-align: center;
+    }
+    th { background: rgba(255,255,255,0.05); }
+
+    .gate-sim {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin: 20px 0;
+    }
+
+    .active-row { background: var(--accent-hover) !important; color: white; }
+    
+    .theme-toggle {
+      background: transparent;
+      border: 1px solid var(--surface-border);
+      color: var(--text);
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <h1>Informatika - Priprema & Cheatsheet</h1>
+    <button class="theme-toggle" onclick="toggleTheme()">Svijetla / Tamna tema</button>
+  </header>
+
+  <div class="controls">
+    <input type="text" id="searchInput" placeholder="Pretraži pitanja, sklopove ili pojmove..." oninput="filterCards()">
+    <button onclick="setAllCards(true)">Prikaži sve</button>
+    <button onclick="setAllCards(false)">Sakrij sve</button>
+  </div>
+
+  <!-- SEKCIJA: SLOŽENI LOGIČKI SKLOPOVI SA SLIKA -->
+  <section class="card open" data-search="slozeni logicki sklopovi sheme tablice istinitosti a b c y">
+    <div class="card-header" onclick="toggleCard(this)">Zadaci sa shemama logičkih sklopova (Slike A, B, C, Y)</div>
+    <div class="card-body">
+      <p>Ovdje su rješenja i tablice istinitosti za složene logičke sklopove s tvojih slika koji koriste 3 ulaza (A, B, C).</p>
+      
+      <hr style="border: 0; border-top: 1px solid var(--surface-border); margin: 16px 0;">
+      
+      <h2>Sklop 1 (Gornja shema sa slike)</h2>
+      <p><strong>Logički izraz:</strong> $Y = \overline{(A \land (B \land C))}$ (ili odgovarajuća kombinacija AND/NOT vrata)</p>
+      <table>
+        <tr><th>A</th><th>B</th><th>C</th><th>Y</th></tr>
+        <tr><td>0</td><td>0</td><td>0</td><td>1</td></tr>
+        <tr><td>0</td><td>0</td><td>1</td><td>1</td></tr>
+        <tr><td>0</td><td>1</td><td>0</td><td>1</td></tr>
+        <tr><td>0</td><td>1</td><td>1</td><td>1</td></tr>
+        <tr><td>1</td><td>0</td><td>0</td><td>1</td></tr>
+        <tr><td>1</td><td>0</td><td>1</td><td>1</td></tr>
+        <tr><td>1</td><td>1</td><td>0</td><td>1</td></tr>
+        <tr><td>1</td><td>1</td><td>1</td><td>0</td></tr>
+      </table>
+
+      <hr style="border: 0; border-top: 1px solid var(--surface-border); margin: 16px 0;">
+
+      <h2>Sklop 2 (Druga shema s vrha)</h2>
+      <p>Kombinacija višekanalnih ulaza A, B, C kroz sklopove negacije i OR/AND vrata.</p>
+      <table>
+        <tr><th>A</th><th>B</th><th>C</th><th>Y</th></tr>
+        <tr><td>0</td><td>0</td><td>0</td><td>1</td></tr>
+        <tr><td>0</td><td>0</td><td>1</td><td>0</td></tr>
+        <tr><td>0</td><td>1</td><td>0</td><td>1</td></tr>
+        <tr><td>0</td><td>1</td><td>1</td><td>0</td></tr>
+        <tr><td>1</td><td>0</td><td>0</td><td>1</td></tr>
+        <tr><td>1</td><td>0</td><td>1</td><td>0</td></tr>
+        <tr><td>1</td><td>1</td><td>0</td><td>0</td></tr>
+        <tr><td>1</td><td>1</td><td>1</td><td>1</td></tr>
+      </table>
+
+      <hr style="border: 0; border-top: 1px solid var(--surface-border); margin: 16px 0;">
+
+      <h2>Sklop 3 (Treća shema s vrha)</h2>
+      <table>
+        <tr><th>A</th><th>B</th><th>C</th><th>Y</th></tr>
+        <tr><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+        <tr><td>0</td><td>0</td><td>1</td><td>1</td></tr>
+        <tr><td>0</td><td>1</td><td>0</td><td>1</td></tr>
+        <tr><td>0</td><td>1</td><td>1</td><td>1</td></tr>
+        <tr><td>1</td><td>0</td><td>0</td><td>1</td></tr>
+        <tr><td>1</td><td>0</td><td>1</td><td>1</td></tr>
+        <tr><td>1</td><td>1</td><td>0</td><td>1</td></tr>
+        <tr><td>1</td><td>1</td><td>1</td><td>1</td></tr>
+      </table>
+
+      <hr style="border: 0; border-top: 1px solid var(--surface-border); margin: 16px 0;">
+
+      <h2>Sklop 4 (Donja shema sa slike)</h2>
+      <table>
+        <tr><th>A</th><th>B</th><th>Y</th></tr>
+        <tr><td>0</td><td>0</td><td>1</td></tr>
+        <tr><td>0</td><td>1</td><td>1</td></tr>
+        <tr><td>1</td><td>0</td><td>0</td></tr>
+        <tr><td>1</td><td>1</td><td>1</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <section id="interactive-calculator" class="card open">
+    <div class="card-header" onclick="toggleCard(this)">
+      <span>Interaktivni kalkulator osnovnih logičkih vrata & tablica istinitosti</span>
+    </div>
+    <div class="card-body">
+      <div class="gate-sim">
+        <div>
+          <label>Ulaz A: </label>
+          <button id="btnA" onclick="toggleVal('A')">0</button>
+        </div>
+        <div>
+          <label>Vrata: </label>
+          <select id="gateSelect" onchange="updateSim()" style="padding: 8px; border-radius: 6px; background: var(--surface); color: var(--text); border: 1px solid var(--surface-border);">
+            <option value="AND">AND (Konjunkcija)</option>
+            <option value="OR">OR (Disjunkcija)</option>
+            <option value="NOT">NOT (Negacija)</option>
+            <option value="NAND">NAND</option>
+            <option value="NOR">NOR</option>
+            <option value="XOR">XOR</option>
+          </select>
+        </div>
+        <div id="inputB-group">
+          <label>Ulaz B: </label>
+          <button id="btnB" onclick="toggleVal('B')">0</button>
+        </div>
+        <div>
+          <strong>Izlaz Y = <span id="outY">0</span></strong>
+        </div>
+      </div>
+      <table id="simTable">
+        <!-- Generira se dinamički -->
+      </table>
+    </div>
+  </section>
+
+  <div id="questionsContainer">
+    <!-- Pitanja iz kvizova sa slika -->
+    <div class="card" data-search="kojoj matematickoj radnji odgovara funkcija disjunkcija zbrajanje">
+      <div class="card-header" onclick="toggleCard(this)">Pitanje 1: Kojoj matematičkoj radnji odgovara funkcija disjunkcija?</div>
+      <div class="card-body">
+        <ul>
+          <li>a. množenje</li>
+          <li><strong>b. zbrajanje</strong></li>
+        </ul>
+        <div class="answer-box">Točan odgovor: b. zbrajanje</div>
+      </div>
+    </div>
+
+    <div class="card" data-search="odaberi izjavu koja nije logicka ona ima lijepe oci">
+      <div class="card-header" onclick="toggleCard(this)">Pitanje 2: Odaberi izjavu koja nije logička.</div>
+      <div class="card-body">
+        <ul>
+          <li>a. Srijeda je prvi dan u tjednu.</li>
+          <li>b. 2 > 1</li>
+          <li>c. Zagreb je glavni grad Hrvatske.</li>
+          <li><strong>d. Ona ima lijepe oči.</strong></li>
+        </ul>
+        <div class="answer-box">Točan odgovor: d. Ona ima lijepe oči.</div>
+      </div>
+    </div>
+
+    <div class="card" data-search="kako nazivamo zamjenu za odredenu logicku izjavu logicka varijabla">
+      <div class="card-header" onclick="toggleCard(this)">Pitanje 3: Kako nazivamo zamjenu za određenu logičku izjavu?</div>
+      <div class="card-body">
+        <ul>
+          <li>a. logički izraz</li>
+          <li>b. logička funkcija</li>
+          <li>c. tablica istinitosti</li>
+          <li><strong>d. logička varijabla</strong></li>
+        </ul>
+        <div class="answer-box">Točan odgovor: d. logička varijabla</div>
+      </div>
+    </div>
+
+    <div class="card" data-search="rezultate odnosa u funkcijama mozemo prikazati u tablicama istinitosti">
+      <div class="card-header" onclick="toggleCard(this)">Pitanje 4: Rezultate odnosa u funkcijama možemo prikazati u tablicama...</div>
+      <div class="card-body">
+        <div class="answer-box">Točan odgovor: istinitosti</div>
+      </div>
+    </div>
+
+    <div class="card" data-search="tablica istinitosti A B C 1 1 1 konjunkciju">
+      <div class="card-header" onclick="toggleCard(this)">Pitanje 5: Na slici je prikazana tablica istinitosti za logičku funkciju? (A=1, B=1 => C=1)</div>
+      <div class="card-body">
+        <ul>
+          <li><strong>a. konjunkciju</strong></li>
+          <li>b. identitetu</li>
+          <li>c. negaciju</li>
+          <li>d. disjunkciju</li>
+        </ul>
+        <div class="answer-box">Točan odgovor: a. konjunkciju</div>
+      </div>
+    </div>
+
+    <div class="card" data-search="koji od navedenih dijelova nisu dio procesora ram ssd">
+      <div class="card-header" onclick="toggleCard(this)">Pitanje 6: Koji od navedenih dijelova nisu dio procesora?</div>
+      <div class="card-body">
+        <ul>
+          <li>a. registri</li>
+          <li>b. upravljačka jedinica</li>
+          <li><strong>c. RAM</strong></li>
+          <li><strong>d. SSD</strong></li>
+        </ul>
+        <div class="answer-box">Točni odgovori: RAM, SSD</div>
+      </div>
+    </div>
+
+    <div class="card" data-search="koji dio racunala nazivamo i mozak racunala procesor">
+      <div class="card-header" onclick="toggleCard(this)">Pitanje 7: Koji dio računala nazivamo i "mozak" računala?</div>
+      <div class="card-body">
+        <ul>
+          <li>a. matičnu ploču</li>
+          <li>b. RAM</li>
+          <li><strong>c. procesor</strong></li>
+          <li>d. HDD</li>
+        </ul>
+        <div class="answer-box">Točan odgovor: c. procesor</div>
+      </div>
+    </div>
+
+    <div class="card" data-search="koji logicki sklop je prikazan na slici konjunkcija and">
+      <div class="card-header" onclick="toggleCard(this)">Pitanje 8: Koji logički sklop je prikazan na slici? (Simbol u obliku slova D)</div>
+      <div class="card-body">
+        <ul>
+          <li>a. disjunkcija</li>
+          <li>b. negacija</li>
+          <li><strong>c. konjunkcija</strong></li>
+        </ul>
+        <div class="answer-box">Točan odgovor: c. konjunkcija (AND sklop)</div>
+      </div>
+    </div>
+
+    <div class="card" data-search="preko univerzalne serijske uticnice usb podaci se razmjenjuju serijski slijedno">
+      <div class="card-header" onclick="toggleCard(this)">Pitanje 9: Preko univerzalne serijske utičnice (USB) podaci se razmjenjuju?</div>
+      <div class="card-body">
+        <ul>
+          <li><strong>a. serijski (slijedno)</strong></li>
+          <li>b. paralelno (usporedno)</li>
+        </ul>
+        <div class="answer-box">Točan odgovor: a. serijski (slijedno)</div>
+      </div>
+    </div>
+
+    <div class="card" data-search="kod kojeg se prijenosa podataka istovremeno prenosi vise bitova paralelnog usporednog">
+      <div class="card-header" onclick="toggleCard(this)">Pitanje 10: Kod kojeg se prijenosa podataka istovremeno prenosi više bitova?</div>
+      <div class="card-body">
+        <ul>
+          <li>a. serijskog (slijednog)</li>
+          <li><strong>b. paralelnog (usporednog)</strong></li>
+        </ul>
+        <div class="answer-box">Točan odgovor: b. paralelnog (usporednog)</div>
+      </div>
+    </div>
+
+    <div class="card" data-search="kojom jedinicom oznacavamo brzinu rada procesora mhz ghz">
+      <div class="card-header" onclick="toggleCard(this)">Pitanje 11: Kojom jedinicom označavamo brzinu rada procesora?</div>
+      <div class="card-body">
+        <ul>
+          <li><strong>a. MHz - megahercima</strong></li>
+          <li>b. GB - gigabajtima</li>
+          <li>c. Mbps</li>
+          <li><strong>d. GHz - gigahercima</strong></li>
+        </ul>
+        <div class="answer-box">Točni odgovori: GHz - gigahercima, MHz - megahercima</div>
+      </div>
+    </div>
+
+    <div class="card" data-search="koji dio racunala povezuje sve dijelove u cjelinu maticna ploca">
+      <div class="card-header" onclick="toggleCard(this)">Pitanje 13: Koji dio računala povezuje sve dijelove u cjelinu?</div>
+      <div class="card-body">
+        <ul>
+          <li>a. HDD</li>
+          <li><strong>b. matična ploča</strong></li>
+          <li>c. procesor</li>
+          <li>d. RAM</li>
+        </ul>
+        <div class="answer-box">Točan odgovor: b. matična ploča</div>
+      </div>
+    </div>
+
+    <div class="card" data-search="softver koji upravlja radom racunala je operacijski sustav">
+      <div class="card-header" onclick="toggleCard(this)">Pitanje 14: Softver koji upravlja radom računala je?</div>
+      <div class="card-body">
+        <ul>
+          <li>a. upravljačka jedinica</li>
+          <li><strong>b. operacijski sustav</strong></li>
+        </ul>
+        <div class="answer-box">Točan odgovor: b. operacijski sustav</div>
+      </div>
+    </div>
+
+    <div class="card" data-search="sve informacije potrebne za trenutacni rad racunala te svi aktivni programi upisuju se u ram">
+      <div class="card-header" onclick="toggleCard(this)">Pitanje 15: Sve informacije potrebne za trenutačni rad računala te svi aktivni programi upisuju se u:</div>
+      <div class="card-body">
+        <ul>
+          <li>a. CPU</li>
+          <li>b. HDD</li>
+          <li><strong>c. RAM</strong></li>
+          <li>d. SSD</li>
+        </ul>
+        <div class="answer-box">Točan odgovor: c. RAM</div>
+      </div>
+    </div>
+
+    <div class="card" data-search="koje od navedenih jedinica su izlazne jedinice pisac monitor">
+      <div class="card-header" onclick="toggleCard(this)">Pitanje 16: Koje od navedenih jedinica su izlazne jedinice?</div>
+      <div class="card-body">
+        <ul>
+          <li>a. tipkovnica</li>
+          <li>b. RAM</li>
+          <li>c. procesor</li>
+          <li><strong>d. pisač</strong></li>
+          <li><strong>e. monitor</strong></li>
+          <li>f. miš</li>
+        </ul>
+        <div class="answer-box">Točni odgovori: d. pisač, e. monitor</div>
+      </div>
+    </div>
+
+    <div class="card" data-search="koju vrstu memorije rabi ssd disk flash memoriju">
+      <div class="card-header" onclick="toggleCard(this)">Pitanje 17: Koju vrstu memorije rabi SSD disk?</div>
+      <div class="card-body">
+        <ul>
+          <li>a. casch memoriju</li>
+          <li><strong>b. flash memoriju</strong></li>
+          <li>c. optičku memoriju</li>
+          <li>d. magnetnu memoriju</li>
+        </ul>
+        <div class="answer-box">Točan odgovor: b. flash memoriju</div>
+      </div>
+    </div>
+
+    <div class="card" data-search="kapacitet je svojstvo radne memorije hard diska">
+      <div class="card-header" onclick="toggleCard(this)">Pitanje 18: Kapacitet je svojstvo:</div>
+      <div class="card-body">
+        <ul>
+          <li><strong>a. radne memorije</strong></li>
+          <li>b. matične ploče</li>
+          <li><strong>c. hard diska</strong></li>
+          <li>d. procesora</li>
+        </ul>
+        <div class="answer-box">Točni odgovori: a. radne memorije, c. hard diska</div>
+      </div>
+    </div>
+
+    <div class="card" data-search="koliko operacija u sekundi moze izvesti procesor od 1 ghz milijardu">
+      <div class="card-header" onclick="toggleCard(this)">Pitanje 19: Koliko operacija u sekundi može izvesti procesor od 1 GHz-a?</div>
+      <div class="card-body">
+        <ul>
+          <li>a. milijun</li>
+          <li>b. sto tisuća</li>
+          <li>c. jednu</li>
+          <li><strong>d. milijardu</strong></li>
+        </ul>
+        <div class="answer-box">Točan odgovor: d. milijardu</div>
+      </div>
+    </div>
+
+    <div class="card" data-search="koliko bitova istovremeno mogu obradivati danasnji procesori 32 64">
+      <div class="card-header" onclick="toggleCard(this)">Pitanje 20: Koliko bitova istovremeno mogu obrađivati današnji procesori?</div>
+      <div class="card-body">
+        <ul>
+          <li>a. 50</li>
+          <li>b. 100</li>
+          <li><strong>c. 32</strong></li>
+          <li><strong>d. 64</strong></li>
+        </ul>
+        <div class="answer-box">Točni odgovori: c. 32, d. 64</div>
+      </div>
+    </div>
+
+    <div class="card" data-search="ram je spremnik na racunalu koji omogucava upisivanje i citanje podataka tocno">
+      <div class="card-header" onclick="toggleCard(this)">Pitanje 21: RAM je spremnik na računalu koji omogućava upisivanje i čitanje podataka.</div>
+      <div class="card-body">
+        <div class="answer-box">Točan odgovor: Točno</div>
+      </div>
+    </div>
+
+    <div class="card" data-search="podaci u ssd disku ne ostaju spremljeni nakon iskljucivanja racunala netocno">
+      <div class="card-header" onclick="toggleCard(this)">Pitanje 22: Podaci u SSD disku ne ostaju spremljeni nakon isključivanja računala.</div>
+      <div class="card-body">
+        <div class="answer-box">Točan odgovor: Netočno</div>
+      </div>
+    </div>
+
+    <div class="card" data-search="procesor ima dvije glavne zadace obrada podataka upravljanje dijelovima racunala">
+      <div class="card-header" onclick="toggleCard(this)">Pitanje 23: Procesor ima dvije glavne zadaće:</div>
+      <div class="card-body">
+        <ul>
+          <li><strong>a. obrada podataka</strong></li>
+          <li>b. priključuje na sebe ostale dijelove računala</li>
+          <li>c. hladi računalo</li>
+          <li><strong>d. upravljanje dijelovima računala</strong></li>
+          <li>e. spremanje podataka</li>
+        </ul>
+        <div class="answer-box">Točni odgovori: a. obrada podataka, d. upravljanje dijelovima računala</div>
+      </div>
+    </div>
+
+    <div class="card" data-search="usb skracnica je od universal serial bug netocno">
+      <div class="card-header" onclick="toggleCard(this)">Pitanje 24: USB skraćenica je od Universal Serial Bug.</div>
+      <div class="card-body">
+        <div class="answer-box">Točan odgovor: Netočno (Značenje je Universal Serial Bus)</div>
+      </div>
+    </div>
+
+    <div class="card" data-search="negacija je logicka funkcija koja negira logicku funkciju">
+      <div class="card-header" onclick="toggleCard(this)">Pitanje 25: Negacija je logička funkcija koja:</div>
+      <div class="card-body">
+        <ul>
+          <li>a. pretvara dvije istine u jednu laž</li>
+          <li><strong>b. negira logičku funkciju</strong></li>
+          <li>c. pretvara sve logičke izjave u istinu</li>
+        </ul>
+        <div class="answer-box">Točan odgovor: b. negira logičku funkciju</div>
+      </div>
+    </div>
+
+    <div class="card" data-search="kod logicke funkcije disjunkcije rezultat ce biti 0 samo ako su obje varijable 0 tocno">
+      <div class="card-header" onclick="toggleCard(this)">Pitanje 26: Kod logičke funkcije disjunkcije rezultat će biti 0 samo ako su obje varijable 0.</div>
+      <div class="card-body">
+        <div class="answer-box">Točan odgovor: Točno</div>
+      </div>
+    </div>
+
+    <div class="card" data-search="kod logicke funkcije konjunkcije rezultat ce biti 0 samo ako su obje varijable 0 netocno">
+      <div class="card-header" onclick="toggleCard(this)">Pitanje 27: Kod logičke funkcije konjunkcije rezultat će biti 0 samo ako su obje varijable 0.</div>
+      <div class="card-body">
+        <div class="answer-box">Točan odgovor: Netočno (Kod konjunkcije je 1 samo ako su obje 1, inače je 0)</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  let valA = 0;
+  let valB = 0;
+
+  function toggleVal(varName) {
+    if (varName === 'A') {
+      valA = valA === 0 ? 1 : 0;
+      document.getElementById('btnA').innerText = valA;
+    } else {
+      valB = valB === 0 ? 1 : 0;
+      document.getElementById('btnB').innerText = valB;
+    }
+    updateSim();
+  }
+
+  function updateSim() {
+    const gate = document.getElementById('gateSelect').value;
+    const bGroup = document.getElementById('inputB-group');
+    const table = document.getElementById('simTable');
+    
+    if (gate === 'NOT') {
+      bGroup.style.display = 'none';
+    } else {
+      bGroup.style.display = 'inline-block';
+    }
+
+    let res = 0;
+    if (gate === 'AND') res = valA & valB;
+    else if (gate === 'OR') res = valA | valB;
+    else if (gate === 'NOT') res = valA === 0 ? 1 : 0;
+    else if (gate === 'NAND') res = !(valA & valB) ? 1 : 0;
+    else if (gate === 'NOR') res = !(valA | valB) ? 1 : 0;
+    else if (gate === 'XOR') res = valA ^ valB;
+
+    document.getElementById('outY').innerText = res;
+
+    // Generiranje tablice
+    let html = '';
+    if (gate === 'NOT') {
+      html = `<tr><th>A</th><th>Y</th></tr>
+              <tr class="${valA===0?'active-row':''}"><td>0</td><td>1</td></tr>
+              <tr class="${valA===1?'active-row':''}"><td>1</td><td>0</td></tr>`;
+    } else {
+      html = `<tr><th>A</th><th>B</th><th>Y</th></tr>`;
+      const combinations = [[0,0], [0,1], [1,0], [1,1]];
+      combinations.forEach(([a, b]) => {
+        let r = 0;
+        if (gate === 'AND') r = a & b;
+        else if (gate === 'OR') r = a | b;
+        else if (gate === 'NAND') r = !(a & b) ? 1 : 0;
+        else if (gate === 'NOR') r = !(a | b) ? 1 : 0;
+        else if (gate === 'XOR') r = a ^ b;
+        
+        const isActive = (a === valA && b === valB);
+        html += `<tr class="${isActive ? 'active-row' : ''}"><td>${a}</td><td>${b}</td><td>${r}</td></tr>`;
+      });
+    }
+    table.innerHTML = html;
+  }
+
+  function toggleCard(header) {
+    header.parentElement.classList.toggle('open');
+  }
+
+  function setAllCards(open) {
+    document.querySelectorAll('#questionsContainer .card, section.card').forEach(card => {
+      if (open) card.classList.add('open');
+      else card.classList.remove('open');
+    });
+  }
+
+  function filterCards() {
+    const query = document.getElementById('searchInput').value.toLowerCase();
+    document.querySelectorAll('.card').forEach(card => {
+      const text = card.getAttribute('data-search') || card.innerText.toLowerCase();
+      if (text.includes(query)) {
+        card.style.display = 'block';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+  }
+
+  function toggleTheme() {
+    const currentTheme = document.body.getAttribute('data-theme');
+    if (currentTheme === 'light') {
+      document.body.removeAttribute('data-theme');
+    } else {
+      document.body.setAttribute('data-theme', 'light');
+    }
+  }
+
+  // Inicijalizacija simulatora
+  updateSim();
+</script>
+
+</body>
+</html>
